@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	greetv1 "example/gen/greet/v1"
-	"example/gen/greet/v1/greetv1connect"
+	greetv1 "connect-go-example/gen/greet/v1"
+	"connect-go-example/gen/greet/v1/greetv1connect"
 
 	"connectrpc.com/connect"
 )
