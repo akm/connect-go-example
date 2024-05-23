@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"connectrpc.com/connect"
 	"golang.org/x/net/http2"
@@ -34,9 +35,14 @@ func main() {
 	path, handler := greetv1connect.NewGreetServiceHandler(greeter)
 	mux.Handle(path, handler)
 
-	fmt.Printf("Listening to 0.0.0.0:8080\n")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	fmt.Printf("Listening to 0.0.0.0:%s\n", port)
 	http.ListenAndServe(
-		"0.0.0.0:8080",
+		"0.0.0.0:"+port,
 		// Use h2c so we can serve HTTP/2 without TLS.
 		h2c.NewHandler(mux, &http2.Server{}),
 	)
