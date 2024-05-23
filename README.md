@@ -1,5 +1,7 @@
 # connect-go-example
 
+This is an example of [Connect for Go](https://connectrpc.com/docs/go/getting-started).
+
 ## Run local process
 
 ```
