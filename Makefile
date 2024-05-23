@@ -19,3 +19,14 @@ DOCKER_REPO_PREFIX=akima
 push: build
 	docker tag $(IMAGE_NAME) $(DOCKER_REPO_PREFIX)/$(IMAGE_NAME)
 	docker push $(DOCKER_REPO_PREFIX)/$(IMAGE_NAME)
+
+.PHONY: deploy
+deploy:
+	gcloud run deploy connect-go-example \
+	--image=akima/connect-go-example:736f7b1 \
+	--allow-unauthenticated \
+	--port=8080 \
+	--memory=128Mi \
+	--max-instances=2 \
+	--use-http2 \
+	--region=asia-northeast1
