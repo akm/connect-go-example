@@ -33,8 +33,10 @@ func main() {
 	mux := http.NewServeMux()
 	path, handler := greetv1connect.NewGreetServiceHandler(greeter)
 	mux.Handle(path, handler)
+
+	fmt.Printf("Listening to 0.0.0.0:8080\n")
 	http.ListenAndServe(
-		"localhost:8080",
+		"0.0.0.0:8080",
 		// Use h2c so we can serve HTTP/2 without TLS.
 		h2c.NewHandler(mux, &http2.Server{}),
 	)
