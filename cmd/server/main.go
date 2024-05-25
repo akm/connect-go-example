@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 
@@ -21,7 +20,6 @@ func (s *GreetServer) Greet(
 	ctx context.Context,
 	req *connect.Request[greetv1.GreetRequest],
 ) (*connect.Response[greetv1.GreetResponse], error) {
-	log.Println("Request headers: ", req.Header())
 	res := connect.NewResponse(&greetv1.GreetResponse{
 		Greeting: fmt.Sprintf("Hello, %s!", req.Msg.Name),
 	})
@@ -33,7 +31,7 @@ func main() {
 	greeter := &GreetServer{}
 	mux := http.NewServeMux()
 	path, handler := greetv1connect.NewGreetServiceHandler(greeter)
-	mux.Handle(path, handler)
+	mux.Handle(path, DumpRequestHandler(handler))
 
 	port := os.Getenv("PORT")
 	if port == "" {
